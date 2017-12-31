@@ -78,7 +78,7 @@ public class MemberEntity implements Serializable {
     @OneToMany(mappedBy="member")
     private List<SalesRecordEntity> purchases;
 
-
+    
     public void create(String name, String address, Date DOB, String email, String phone, CountryEntity country, String city, String zipCode, String passwordHash, String passwordSalt) {
         this.setName(name);
         this.setAddress(address);

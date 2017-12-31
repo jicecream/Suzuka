@@ -65,7 +65,7 @@ public class Member {
         this.securityAnswer = securityAnswer;
     }
 
-    public Integer getAge() {
+    public Integer getf() {
         return age;
     }
 

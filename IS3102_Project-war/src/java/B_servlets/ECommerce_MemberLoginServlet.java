@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import javax.servlet.RequestDispatcher;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Invocation;
@@ -32,6 +33,8 @@ public class ECommerce_MemberLoginServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
+            //retrieve email and password from the form, check whether loginMember is null. 
+            //If not null then  sendRedirect to ECommerce_GetMember
             String email = request.getParameter("email");
             String password = request.getParameter("password");
             Cookie cookie = new Cookie("memberId", email);
@@ -47,7 +50,11 @@ public class ECommerce_MemberLoginServlet extends HttpServlet {
                 session.setAttribute("countries", countries);
 
                 session.setAttribute("memberEmail", memberEmail);
-                response.sendRedirect("ECommerce_GetMember");
+                
+                response.sendRedirect("./ECommerce_GetMember");
+//                RequestDispatcher rd = request.getRequestDispatcher("./ECommerce_GetMember");
+//                rd.forward(request, response);
+//                
             } else {
                 result = "Login fail. Username or password is wrong or account is not activated.";
                 response.sendRedirect("/IS3102_Project-war/B/SG/memberLogin.jsp?errMsg=" + result);
@@ -59,10 +66,12 @@ public class ECommerce_MemberLoginServlet extends HttpServlet {
         }
     }
 
+    //get email and password from the web service @GET loginMember
     public String loginMember(String email, String password) {
         Client client = ClientBuilder.newClient();
         WebTarget target = client
-                .target("http://localhost:8080/IS3102_WebService-Student/webresources/entity.memberentity").path("login")
+                .target("http://localhost:8080/IS3102_WebService-Student/webresources/entity.memberentity")
+                    .path("login")
                 .queryParam("email", email)
                 .queryParam("password", password);
         Invocation.Builder invocationBuilder = target.request(MediaType.APPLICATION_JSON);

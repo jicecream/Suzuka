@@ -9,12 +9,17 @@
 <html> 
     <jsp:include page="header.html" />
     <body>
+        
+  
+        
         <script>
             function validatePassword() {
                 var password = document.getElementById("password").value;
                 var repassword = document.getElementById("repassword").value;
                 var ok = true;
-                if ((password != null && repassword != null) || (password != "" && repassword != "")) {
+                
+        
+        if ((password != null && repassword != null) || (password != "" && repassword != "")) {
                     if (password != repassword) {
                         //alert("Passwords Do not match");
                         document.getElementById("password").style.borderColor = "#E34234";
@@ -73,20 +78,21 @@
                             </ul>
                             <div class="tab-content">
                                 <div id="overview" class="tab-pane active">
+                                    
                                     <%if (member != null) {%>
                                     <form role="form" action="../../ECommerce_MemberEditProfileServlet" onsubmit="return validatePassword()">
                                         <h4>Personal Information</h4>
                                         <div class="form-group">
                                             <label>Name</label>
-                                            <input class="form-control" required="true" name="name" type="text" value="">
+                                            <input class="form-control" required="true" name="name" type="text" value=<%= member.getName()%> >
                                         </div>
                                         <div class="form-group">
                                             <label>E-mail Address</label>
-                                            <input class="form-control" required="true" value="" disabled/>
+                                            <input class="form-control" required="true" value=<%=member.getEmail()%> disabled/>
                                         </div>
                                         <div class="form-group">
                                             <label>Phone</label>
-                                            <input class="form-control" required="true" type="text" name="phone" value="">
+                                            <input class="form-control" required="true" type="text" name="phone" value=<%=member.getPhone()%>>
                                         </div>
                                         <div class="form-group">
                                             <label>Country</label>
@@ -353,7 +359,7 @@
                                         <div class="form-group">
                                             <label>Set Challenge Question</label>
                                             <select name="securityQuestion">
-                                                <%int securityQn = 0;
+                                                   <%int securityQn = 0;
                                                     if (member.getSecurityQuestion() == null) {
                                                         securityQn = 0;
                                                     } else {
