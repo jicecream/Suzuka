@@ -1,3 +1,5 @@
+<%@page import="EntityManager.PromotionEntity"%>
+<%@page import="EntityManager.Item_CountryEntity"%>
 <%@page import="HelperClasses.RetailProduct"%>
 <%@page import="java.text.DateFormat"%>
 <%@page import="java.text.SimpleDateFormat"%>
@@ -17,12 +19,18 @@
 <html> <!--<![endif]-->
     <jsp:include page="header.html" />
     <body>
+        
         <%
             List<RetailProduct> retailProducts = (List<RetailProduct>) (session.getAttribute("retailProducts"));
             RetailProduct retailProduct = new RetailProduct();
             List<StoreEntity> storesInCountry = (List<StoreEntity>) session.getAttribute("storesInCountry");
             /*insert code here*/
+        
+        List<Item_CountryEntity> item_countryList = (List<Item_CountryEntity>) (session.getAttribute("item_countryList"));
+        List<PromotionEntity> promotions = (List<PromotionEntity>) session.getAttribute("promotions");
+
         %>
+        
         <div class="body">
             <jsp:include page="menu2.jsp" />
             <div class="body">

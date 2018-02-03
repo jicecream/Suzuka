@@ -527,7 +527,7 @@
     </servlet>
     <servlet>
         <servlet-name>ECommerce_AllRetailProductsServlet</servlet-name>
-        <servlet-class>B_servlets.ECommerce_AllRetailProductsServlet</servlet-class>
+        <servlet-class>B_servlets.ECommerce_AddRetailProductToListServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>A1/AccessRight_edit</servlet-name>

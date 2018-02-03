@@ -17,7 +17,7 @@ import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-public class ECommerce_AllRetailProductsServlet extends HttpServlet {
+public class ECommerce_AddRetailProductToListServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -32,6 +32,7 @@ public class ECommerce_AllRetailProductsServlet extends HttpServlet {
             response.sendRedirect("/IS3102_Project-war/B/SG/allRetailProducts.jsp");
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());
+
         }
     }
 

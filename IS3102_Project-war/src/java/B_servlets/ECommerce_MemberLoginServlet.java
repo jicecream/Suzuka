@@ -51,10 +51,10 @@ public class ECommerce_MemberLoginServlet extends HttpServlet {
 
                 session.setAttribute("memberEmail", memberEmail);
                 
-                response.sendRedirect("./ECommerce_GetMember");
-//                RequestDispatcher rd = request.getRequestDispatcher("./ECommerce_GetMember");
-//                rd.forward(request, response);
-//                
+  //              response.sendRedirect("./ECommerce_GetMember");
+                RequestDispatcher rd = request.getRequestDispatcher("./ECommerce_GetMember");
+                rd.forward(request, response);
+                
             } else {
                 result = "Login fail. Username or password is wrong or account is not activated.";
                 response.sendRedirect("/IS3102_Project-war/B/SG/memberLogin.jsp?errMsg=" + result);

@@ -8,6 +8,8 @@
             </a>
         </h1>
         <%
+            Member m = new Member();
+            
             String memberName = (String) (session.getAttribute("memberName"));
             if (memberName == null) {
         %>
