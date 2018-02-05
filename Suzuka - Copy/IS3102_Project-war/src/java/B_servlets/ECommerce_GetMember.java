@@ -67,22 +67,24 @@ public class ECommerce_GetMember extends HttpServlet {
 
             response.sendRedirect("/IS3102_Project-war/B/SG/memberProfile.jsp");
 
-//            //get response from web service
-//            if (cat.getStatus() == Response.Status.OK.getStatusCode()) {
-//                System.out.println("success");
-//                //String c = cat.readEntity(String.class);
-//                int c = cat.readEntity(new GenericType<Integer>() {
-//                });
-//                System.out.println("The value is " + c);
-//
-//                //redirect to user profile page
-//                response.sendRedirect("./IS3102_Project-war/B/SG/memberProfile.jsp" + c);
-//                
-//            }
+            //get response from web service
+            if (cat.getStatus() == Response.Status.OK.getStatusCode()) {
+                System.out.println("success");
+                //String c = cat.readEntity(String.class);
+                int c = cat.readEntity(new GenericType<Integer>() {
+                });
+                System.out.println("The value is " + c);
+
+                //redirect to user profile page
+                response.sendRedirect("./IS3102_Project-war/B/SG/memberProfile.jsp" + c);
+
+            }
 
             /* TODO output your page here. You may use following sample code. */
             //   response.sendRedirect("http://localhost:8080/IS3102_Project-war/B/SG/memberProfile.jsp");
         } catch (Exception e) {
+            PrintWriter out = response.getWriter();
+            out.println(e);
             e.printStackTrace();
         }
 
