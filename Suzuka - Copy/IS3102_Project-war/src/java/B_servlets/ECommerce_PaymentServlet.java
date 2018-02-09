@@ -1,6 +1,5 @@
 package B_servlets;
 
-import HelperClasses.Member;
 import HelperClasses.ShoppingCartLineItem;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -45,54 +44,41 @@ public class ECommerce_PaymentServlet extends HttpServlet {
             shoppingCart = (ArrayList<ShoppingCartLineItem>)session.getAttribute("shoppingCart");
 
             String memberEmail = (String)session.getAttribute("memberEmail");
-        Member member = (Member) session.getAttribute("member");
+
             Long storeID = 10001L;
-             ArrayList<String> sku = new ArrayList<>();
+
             for(ShoppingCartLineItem cart : shoppingCart) {
-             sku.add(cart.getSKU());
+          
                //set the quantity of furniturelist
                     
             }
             
-   
-            double totalPrice = (double) session.getAttribute("totalPrice");
-            int salesRecordId = createTransactionRecord(member, totalPrice);
-            int lineItems = 0;
-            if (salesRecordId != 0) {
-                    for (ShoppingCartLineItem item: shoppingCart) {
-                    if (createLineItemRecord(salesRecordId, Integer.parseInt(item.getId()), item.getQuantity(), item) == 1)
-                        lineItems++;
-            
-                }
-      
-            } 
-                shoppingCart.clear();
-            
-                response.sendRedirect("/IS3102_Project-war/B/SG/shoppingCart.jsp?");
         
+              shoppingCart = new ArrayList<ShoppingCartLineItem>();
+
+                session.setAttribute("shoppingCart", shoppingCart);
+
+              
+                response.sendRedirect("/IS3102_Project-war/B/SG/shoppingCart.jsp?goodMsg=Checkout Successful");
+        }
         
         
         
     }
-    }
-    /**
-     *
-     * @param member
-     * @param amountPaid
-     * @return
-     */
-    public int createTransactionRecord(Member member, double amountPaid) {
+    
+    
+    
+
+    public int createTransactionRecord(String SKU) {
         try {
 
             Client client = ClientBuilder.newClient();
             WebTarget target = client
                     .target("http://localhost:8080/IS3102_WebService-Student/webresources/commerce/")
                     .path("createECommerceTransactionRecord")
-                       .queryParam("memberID", member.getId())
-                    .queryParam("amountPaid", amountPaid);
-            
+                    .queryParam("SKU", SKU);
             Invocation.Builder invocationBuilder = target.request(MediaType.APPLICATION_JSON);
-            Response response = invocationBuilder.put(Entity.entity(member, MediaType.APPLICATION_JSON));
+            Response response = invocationBuilder.put(Entity.entity(SKU, MediaType.APPLICATION_JSON));
             System.out.println("status: " + response.getStatus());
             if (response.getStatus() != 200) {
                 return 0;
@@ -106,20 +92,17 @@ public class ECommerce_PaymentServlet extends HttpServlet {
         }
     }
     
-        public int createLineItemRecord( long itemEntityID,int quantity,long salesRecordID,  ShoppingCartLineItem item) {
+        public int createLineItemRecord(String SKU) {
         try {
             Client client = ClientBuilder.newClient();
 
             WebTarget target = client
                     .target("http://localhost:8080/IS3102_WebService-Student/webresources/commerce/")
                     .path("createECommerceLineItemRecord")
-                    .queryParam("itemEntityID", itemEntityID)
-                    .queryParam("quantity", quantity)
-                    .queryParam("salesRecordID", salesRecordID);
-                   
+                    .queryParam("SKU", SKU);
             Invocation.Builder invocationBuilder = target.request(MediaType.APPLICATION_JSON);
 
-            Response response = invocationBuilder.put(Entity.entity(item, MediaType.APPLICATION_JSON));
+            Response response = invocationBuilder.put(Entity.entity(SKU, MediaType.APPLICATION_JSON));
             System.out.println("status: " + response.getStatus());
             if (response.getStatus() != 200) {
                 return 0;
@@ -129,7 +112,7 @@ public class ECommerce_PaymentServlet extends HttpServlet {
             
             return result;
 
-        } catch (Exception e) {
+        } catch (Exception e) { 
             e.printStackTrace();
             return 0;
         }
